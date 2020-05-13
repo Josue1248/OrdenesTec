@@ -69,7 +69,7 @@ router.post('/register',[
 				newUser.password = hash;
 
 				mongodb.connect(uri, function(err, client){
-					let db = client.db('heroku_7s4pmbnh');
+					let db = client.db('heroku_t75xnp7c');
 					let users = db.collection('users');
 
 					users.insertOne(newUser, function(err, doc){
@@ -104,7 +104,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
 	mongodb.connect(uri, function(err, client){
-		let db = client.db('heroku_7s4pmbnh');
+		let db = client.db('heroku_t75xnp7c');
 		let users = db.collection('users');
 
 		users.findOne({_id: new ObjectId(id)}, function(err, user){
@@ -120,7 +120,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
 	function(username, password, done){
 		mongodb.connect(uri, function(err, client){
-			let db = client.db('heroku_7s4pmbnh');
+			let db = client.db('heroku_t75xnp7c');
 			let users = db.collection('users');
 
 			users.findOne({username: username}, function(err, user){
