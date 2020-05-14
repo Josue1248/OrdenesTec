@@ -8,6 +8,8 @@ var LocalStrategy = require('passport-local').Strategy;
 const { check, validationResult } = require('express-validator');
 
 let uri = 'mongodb://heroku_t75xnp7c:kgd4nfkmrtlac6oce58601pbml@ds127646.mlab.com:27646/heroku_t75xnp7c';
+let db = client.db('heroku_t75xnp7c');
+let users = db.collection('users');
 
 // Login Page - GET
 router.get('/login', function(req, res){
@@ -21,18 +23,18 @@ router.get('/register', function(req, res){
 
 // Register - POST
 router.post('/register',[	
-	check('name', 'No ha ingresado un nombre').notEmpty(),
+	check('fname', 'No ha ingresado un nombre').notEmpty(),
+	check('lname', 'No ha ingresado un nombre').notEmpty(),
 	check('email', 'No ha ingresado un correo').notEmpty(),
 	check('email', 'Por favor, ingrese un correo valido').isEmail(),
-	check('username', 'No ha ingresado un usuario').notEmpty(),
 	check('password', 'No ha ingresado una contraseña').notEmpty(),
 	check('password2', 'Las contraseñas no coinciden').notEmpty()
 	], 
 	function(req, res){
 	// Get Form Values
-	var name     		= req.body.name;
+	var fname     		= req.body.fname;
+	var lname 			= req.body.lname;
 	var email    		= req.body.email;
-	var username 		= req.body.username;
 	var password 		= req.body.password;
 	var password2 		= req.body.password2;
 
@@ -50,17 +52,17 @@ router.post('/register',[
 		console.log(errors)
 		res.render('register', {
 			errors: errors,
-			name: name,
+			fname: fname,
+			lname: lname,
 			email: email,
-			username:username,
 			password: password,
 			password2: password2
 		});
 	} else {
 		var newUser = {
-			name: name,
+			fname: fname,
+			lname: lname,
 			email: email,
-			username:username,
 			password: password
 		}
 
@@ -104,8 +106,6 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
 	mongodb.connect(uri, function(err, client){
-		let db = client.db('heroku_t75xnp7c');
-		let users = db.collection('users');
 
 		users.findOne({_id: new ObjectId(id)}, function(err, user){
 			done(err, user);
