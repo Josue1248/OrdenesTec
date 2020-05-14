@@ -8,8 +8,6 @@ var LocalStrategy = require('passport-local').Strategy;
 const { check, validationResult } = require('express-validator');
 
 let uri = 'mongodb://heroku_t75xnp7c:kgd4nfkmrtlac6oce58601pbml@ds127646.mlab.com:27646/heroku_t75xnp7c';
-let db = client.db('heroku_t75xnp7c');
-let users = db.collection('users');
 
 // Login Page - GET
 router.get('/login', function(req, res){
