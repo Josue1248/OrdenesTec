@@ -10,19 +10,27 @@
       <form method="post" action="/users/register" class="form-signin">
         <h2 class="form-signin-heading text-center">Registro de usuario</h2>
         <label class="sr-only">Nombre:</label>
-        <input type="text" name="fname" class="form-control" placeholder="Name" value="<%= (!!locals.name)?fname:'' %>" required autofocus>
+        <input type="text" name="fname" class="form-control" placeholder="Nombre" value="<%= (!!locals.name)?fname:'' %>" required autofocus>
         <br>
         <label class="sr-only">Apellidos:</label>
-        <input type="text" name="lname" class="form-control" placeholder="Name" value="<%= (!!locals.name)?lname:'' %>" required autofocus>
+        <input type="text" name="lname" class="form-control" placeholder="Apellidos" value="<%= (!!locals.name)?lname:'' %>" required autofocus>
         <br>
         <label class="sr-only">Correo:</label>
-        <input type="text" name="email" class="form-control" placeholder="Email" value="<%= (!!locals.email)?email:'' %>" required autofocus>
+        <input type="text" name="email" class="form-control" placeholder="Correo institucional" value="<%= (!!locals.email)?email:'' %>" required autofocus>
         <br>
         <label class="sr-only">Contraseña:</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" value="<%= (!!locals.password)?password:'' %>" required>
+        <input type="password" name="password" class="form-control" placeholder="Contraseña" value="<%= (!!locals.password)?password:'' %>" required>
         <br>
-         <label class="sr-only">Confirmar contraseña:</label>
-        <input type="password" name="password2" class="form-control" placeholder="Password Confirm" value="<%= (!!locals.password2)?password2:'' %>" required>
+        <label class="sr-only">Confirmar contraseña:</label>
+        <input type="password" name="password2" class="form-control" placeholder="Repetir contraseña" value="<%= (!!locals.password2)?password2:'' %>" required>
+        <br>
+		<label for="exampleFormControlSelect1">Tipo de usuario</label>
+		<select class="form-control" name="role">
+			<option value="1">Administrador</option>
+			<option value="2">Tecnico</option>
+			<option value="3">Usuario</option>
+		</select>
+		<br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
       </form>
     </div> <!-- /container -->

@@ -9,6 +9,8 @@ var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var computers = require('./routes/computers');
+var orders = require('./routes/orders');
 
 var app = express();
 
@@ -35,6 +37,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Express Validator Middleware
 
 // Connect-Flash Middleware
@@ -52,6 +55,8 @@ app.get('*', function(req, res, next){
 // Define Routes
 app.use('/', routes);
 app.use('/users', users);
+app.use('/computers', computers);
+app.use('/orders', orders);
 
 app.listen(process.env.PORT);
 console.log('Server started on port 3000');

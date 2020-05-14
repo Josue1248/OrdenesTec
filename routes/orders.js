@@ -11,37 +11,30 @@ let uri = 'mongodb://heroku_t75xnp7c:kgd4nfkmrtlac6oce58601pbml@ds127646.mlab.co
 
 // Login Page - GET
 router.get('/', function(req, res){
-	res.render('users');
-});
-
-// Login Page - GET
-router.get('/login', function(req, res){
-	res.render('login');
+	res.render('orders');
 });
 
 // Register Page - GET
 router.get('/register', function(req, res){
-	res.render('register');
+	res.render('register-orders');
 });
 
 // Register - POST
 router.post('/register',[	
-	check('fname', 'No ha ingresado un nombre').notEmpty(),
-	check('lname', 'No ha ingresado un nombre').notEmpty(),
+	check('name', 'No ha ingresado un nombre').notEmpty(),
 	check('email', 'No ha ingresado un correo').notEmpty(),
 	check('email', 'Por favor, ingrese un correo valido').isEmail(),
+	check('username', 'No ha ingresado un usuario').notEmpty(),
 	check('password', 'No ha ingresado una contraseña').notEmpty(),
-	check('password2', 'Las contraseñas no coinciden').notEmpty(),
-	check('role', 'No ha ingresado un tipo de usuario').notEmpty()
+	check('password2', 'Las contraseñas no coinciden').notEmpty()
 	], 
 	function(req, res){
 	// Get Form Values
-	var fname     		= req.body.fname;
-	var lname 			= req.body.lname;
-	var username    	= req.body.email;
+	var name     		= req.body.name;
+	var email    		= req.body.email;
+	var username 		= req.body.username;
 	var password 		= req.body.password;
 	var password2 		= req.body.password2;
-	var role 			= req.body.role;
 
 	// Get errors 
 	var errors = validationResult(req).errors;
@@ -57,20 +50,18 @@ router.post('/register',[
 		console.log(errors)
 		res.render('register', {
 			errors: errors,
-			fname: fname,
-			lname: lname,
-			username: username,
+			name: name,
+			email: email,
+			username:username,
 			password: password,
-			password2: password2,
-			role: role
+			password2: password2
 		});
 	} else {
 		var newUser = {
-			fname: fname,
-			lname: lname,
-			username: username,
-			password: password,
-			role: role
+			name: name,
+			email: email,
+			username:username,
+			password: password
 		}
 
 		bcrypt.genSalt(10, function(err, salt){
@@ -128,9 +119,6 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy(
 	function(username, password, done){
-		console.log(username);
-		console.log(password);
-
 		mongodb.connect(uri, function(err, client){
 			let db = client.db('heroku_t75xnp7c');
 			let users = db.collection('users');
@@ -160,13 +148,14 @@ passport.use(new LocalStrategy(
 			});
 		});
 	}
+
 ));
 
 // Login - POST
 router.post('/login',
   passport.authenticate('local', { successRedirect: '/',
                                    failureRedirect: '/users/login',
-                                   failureFlash: 'Usuario incorrecto o contraseña incorrecta' }), 
+                                   failureFlash: 'Invalid Username Or Password' }), 
   function(req, res){
   	console.log('Auth Successfull');
   	res.redirect('/');
