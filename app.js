@@ -14,6 +14,8 @@ var orders = require('./routes/orders');
 
 var app = express();
 
+var port = 3000 //process.env.PORT
+
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -58,5 +60,5 @@ app.use('/users', users);
 app.use('/computers', computers);
 app.use('/orders', orders);
 
-app.listen(process.env.PORT);
+app.listen(port);
 console.log('Server started on port 3000');

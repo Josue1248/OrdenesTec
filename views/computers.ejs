@@ -3,10 +3,32 @@
 <%- include('includes/nav-bar') %>
 
 	<div class="container">
-	  <div class="starter-template">
-		<h1>Bienvenido <%= user.name %></h1>
-		<p class="lead">Aqui apareceran las computadoras</p>
-	  </div>
+		<div class="starter-template">
+			<h1>Computadoras</h1>
+			<br>
+			<table class="table">
+				<thead>
+				  <tr>
+					<th>Departamento</th>
+					<th>Marca</th>
+					<th>Modelo</th>
+				  </tr>
+				</thead>
+				<tbody> 
+					<% if (locals.computers) { %>
+						<% computers.forEach(function(computer){ %>
+							<tr>
+								<td><%=computer.department%></td>
+								<td><%=computer.brand%></td>
+								<td><%=computer.model%></td>
+								<td><button id="<%=computer.id%>" class="btn btn-warning editComputer">Editar</button><button id="<%=computer.id%>" class="btn btn-danger deleteComputer">Borrar</button></td>
+							</tr>
+						<% }) %>
+					<% } %>
+				</tbody>
+			  </table>
+			<a class="btn btn-primary" href="/computers/register">Registrar computadora</a>
+		</div>
 	</div><!-- /.container -->
-
+	<%- include('includes/modal') %>
 <%- include('includes/footer') %>
