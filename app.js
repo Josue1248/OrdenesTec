@@ -14,7 +14,7 @@ var orders = require('./routes/orders');
 
 var app = express();
 
-var port = 3000 //process.env.PORT
+var port = process.env.PORT //3000
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
